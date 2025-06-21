@@ -6,143 +6,20 @@
   <title>ESSENCE - Perfumes de Lujo</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(-45deg, #0e0e0e, #1b1b2f, #2f2f46, #0e0e0e);
-      background-size: 400% 400%;
-      animation: fondoMovimiento 20s ease infinite;
-      color: white;
-    }
-    @keyframes fondoMovimiento {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-    header {
-      background-color: #000;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5em;
-      color: #f1c40f;
-      margin: 0;
-    }
-    nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      position: relative;
-    }
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background-color: #f1c40f;
-      transition: width 0.3s;
-    }
-    nav a:hover::after {
-      width: 100%;
-    }
-    .section {
-      display: none;
-      padding: 40px;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .active {
-      display: block;
-    }
-    .hero {
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(5px);
-      border-radius: 20px;
-      padding: 60px 40px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    }
-    .hero h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3em;
-      color: #f1c40f;
-    }
-    .hero p {
-      color: #ccc;
-      font-size: 1.2em;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-    .hero a {
-      background: #f1c40f;
-      color: #111;
-      padding: 12px 25px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .hero a:hover {
-      background: #d4af37;
-    }
-    .productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-top: 20px;
-    }
-    .producto {
-      background: #1e1e1e;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    }
-    .producto img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
-    .producto h3 {
-      margin: 0.5em 0;
-    }
-    .producto button {
-      background-color: #f1c40f;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #carrito {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #f1c40f;
-      color: black;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
+    /* estilos existentes... */
     .suscripcion {
-      margin-top: 40px;
-      background: rgba(255,255,255,0.05);
-      padding: 30px;
-      border-radius: 15px;
+      margin: 40px auto 0;
       text-align: center;
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
     }
     .suscripcion input {
       padding: 10px;
       margin: 10px;
+      width: 80%;
+      max-width: 300px;
       border-radius: 6px;
       border: none;
     }
@@ -155,108 +32,60 @@
       border-radius: 6px;
       cursor: pointer;
     }
-    footer {
-      background-color: #111;
-      text-align: center;
-      color: #ccc;
-      padding: 20px;
-    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>ESSENCE</h1>
-    <nav>
-      <a href="#" onclick="mostrar('inicio')">Inicio</a>
-      <a href="#" onclick="mostrar('catalogo')">Catálogo</a>
-      <a href="#" onclick="mostrar('contacto')">Contacto</a>
-    </nav>
-  </header>
-
-  <div id="carrito">
-    Total: $<span id="total">0</span><br>
-    <small id="cup">(Cupón aplicado: $0)</small>
+  <div class="suscripcion">
+    <h3>Suscribite para obtener un cupón de $500</h3>
+    <input type="email" id="email" placeholder="Correo electrónico"><br>
+    <input type="password" id="password" placeholder="Contraseña"><br>
+    <button onclick="enviarCodigo()">Enviar código</button>
+    <div id="verificacion" style="display:none; margin-top:15px;">
+      <input type="text" id="codigo" placeholder="Ingresá el código recibido"><br>
+      <button onclick="validarCodigo()">Validar código</button>
+    </div>
   </div>
 
-  <section id="inicio" class="section active">
-    <div class="hero">
-      <h2>ESSENCE</h2>
-      <p>Descubrí la esencia del lujo. Fragancias que despiertan emociones, inspiran elegancia y dejan huella.</p>
-      <a href="#" onclick="mostrar('catalogo')">Explorar catálogo</a>
-    </div>
-    <div class="suscripcion">
-      <h3>¡Suscribite y obtené $500 de descuento en tu primera compra!</h3>
-      <input type="email" placeholder="Tu correo electrónico" id="email">
-      <input type="password" placeholder="Contraseña" id="password">
-      <button onclick="suscribirse()">Quiero suscribirme</button>
-    </div>
-  </section>
-
-  <section id="catalogo" class="section">
-    <h2>Nuestros Productos</h2>
-    <div class="productos">
-      <div class="producto">
-        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Perfume A">
-        <h3>Perfume A</h3>
-        <p>$2000</p>
-        <button onclick="agregar(2000)">Agregar</button>
-      </div>
-      <div class="producto">
-        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921818.png" alt="Perfume B">
-        <h3>Perfume B</h3>
-        <p>$2500</p>
-        <button onclick="agregar(2500)">Agregar</button>
-      </div>
-      <div class="producto">
-        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921825.png" alt="Perfume C">
-        <h3>Perfume C</h3>
-        <p>$1800</p>
-        <button onclick="agregar(1800)">Agregar</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="contacto" class="section">
-    <h2>Contacto</h2>
-    <p>Email: essence.lujo@gmail.com</p>
-    <p>Instagram: @essence.lujo</p>
-    <p>Facebook: /essence.lujo</p>
-  </section>
-
-  <footer>
-    &copy; 2025 ESSENCE - Todos los derechos reservados
-  </footer>
-
   <script>
-    let total = 0;
-    let cupon = 500;
-    let cuponUsado = false;
-    let suscripto = false;
+    const API_URL = "https://essence-lujo-api--ggast957.repl.co"; // tu backend en Replit
 
-    function agregar(precio) {
-      total += precio;
-      let descuento = (!cuponUsado && suscripto && total >= cupon) ? cupon : 0;
-      if (descuento > 0) cuponUsado = true;
-      document.getElementById('total').textContent = total - descuento;
-      document.getElementById('cup').textContent = `(Cupón aplicado: $${descuento})`;
-    }
+    async function enviarCodigo() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      if (!email || !password) return alert("Completá los campos");
 
-    function mostrar(seccion) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(seccion).classList.add('active');
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+      const res = await fetch(`${API_URL}/enviar-codigo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
 
-    function suscribirse() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      if (!email || !password) {
-        alert('Por favor completá todos los campos.');
-        return;
+      if (res.ok) {
+        alert("Código enviado a tu correo");
+        document.getElementById("verificacion").style.display = "block";
+      } else {
+        alert("Error al enviar código");
       }
-      suscripto = true;
-      alert('¡Gracias por suscribirte! Ya podés usar tu cupón de $500.');
+    }
+
+    async function validarCodigo() {
+      const email = document.getElementById("email").value;
+      const codigoIngresado = document.getElementById("codigo").value;
+
+      const res = await fetch(`${API_URL}/validar-codigo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, codigoIngresado })
+      });
+
+      const data = await res.json();
+      if (data.validado) {
+        alert("¡Código validado! Cupón activado.");
+        suscripto = true;
+        document.getElementById("verificacion").innerHTML = "✅ Suscripción verificada";
+      } else {
+        alert("Código incorrecto");
+      }
     }
   </script>
 </body>
