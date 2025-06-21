@@ -13,18 +13,21 @@
       color: white;
       padding: 40px;
     }
+
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3.5em;
       text-align: center;
       color: #f1c40f;
     }
+
     .productos {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
       margin-top: 40px;
     }
+
     .producto {
       background: #1e1e1e;
       border-radius: 12px;
@@ -32,15 +35,18 @@
       text-align: center;
       box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
+
     .producto img {
       width: 100px;
       height: 100px;
       object-fit: contain;
       margin-bottom: 10px;
     }
+
     .producto h3 {
       margin: 0.5em 0;
     }
+
     .producto button {
       background-color: #f1c40f;
       border: none;
@@ -49,6 +55,7 @@
       cursor: pointer;
       font-weight: bold;
     }
+
     #carrito {
       position: fixed;
       top: 20px;
@@ -63,10 +70,12 @@
 </head>
 <body>
   <h1>ESSENCE</h1>
+
   <div id="carrito">
     Total: $<span id="total">0</span><br>
     <small id="cup">(Cupón aplicado: $0)</small>
   </div>
+
   <div class="productos">
     <div class="producto">
       <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Perfume A">
@@ -87,14 +96,17 @@
       <button onclick="agregar(1800)">Agregar</button>
     </div>
   </div>
+
   <script>
     let total = 0;
     let cupon = 500;
     let cuponUsado = false;
+
     function agregar(precio) {
       total += precio;
       let descuento = (!cuponUsado && total >= cupon) ? cupon : 0;
       if (descuento > 0) cuponUsado = true;
+
       document.getElementById('total').textContent = total - descuento;
       document.getElementById('cup').textContent = `(Cupón aplicado: $${descuento})`;
     }
