@@ -6,24 +6,46 @@
   <title>ESSENCE - Perfumes de Lujo</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
       background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
       color: white;
+    }
+    header {
+      background-color: #000;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5em;
+      color: #f1c40f;
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .section {
+      display: none;
       padding: 40px;
     }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5em;
-      text-align: center;
-      color: #f1c40f;
+    .active {
+      display: block;
     }
     .productos {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
-      margin-top: 40px;
+      margin-top: 20px;
     }
     .producto {
       background: #1e1e1e;
@@ -59,44 +81,85 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
+    footer {
+      background-color: #111;
+      text-align: center;
+      color: #ccc;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>ESSENCE</h1>
+  <header>
+    <h1>ESSENCE</h1>
+    <nav>
+      <a href="#" onclick="mostrar('inicio')">Inicio</a>
+      <a href="#" onclick="mostrar('catalogo')">Catálogo</a>
+      <a href="#" onclick="mostrar('contacto')">Contacto</a>
+    </nav>
+  </header>
+
   <div id="carrito">
     Total: $<span id="total">0</span><br>
     <small id="cup">(Cupón aplicado: $0)</small>
   </div>
-  <div class="productos">
-    <div class="producto">
-      <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Perfume A">
-      <h3>Perfume A</h3>
-      <p>$2000</p>
-      <button onclick="agregar(2000)">Agregar</button>
+
+  <section id="inicio" class="section active">
+    <h2>Bienvenido a ESSENCE</h2>
+    <p>Descubrí una colección exclusiva de perfumes de lujo diseñados para realzar tu esencia personal.</p>
+  </section>
+
+  <section id="catalogo" class="section">
+    <h2>Nuestros Productos</h2>
+    <div class="productos">
+      <div class="producto">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Perfume A">
+        <h3>Perfume A</h3>
+        <p>$2000</p>
+        <button onclick="agregar(2000)">Agregar</button>
+      </div>
+      <div class="producto">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921818.png" alt="Perfume B">
+        <h3>Perfume B</h3>
+        <p>$2500</p>
+        <button onclick="agregar(2500)">Agregar</button>
+      </div>
+      <div class="producto">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921825.png" alt="Perfume C">
+        <h3>Perfume C</h3>
+        <p>$1800</p>
+        <button onclick="agregar(1800)">Agregar</button>
+      </div>
     </div>
-    <div class="producto">
-      <img src="https://cdn-icons-png.flaticon.com/512/2921/2921818.png" alt="Perfume B">
-      <h3>Perfume B</h3>
-      <p>$2500</p>
-      <button onclick="agregar(2500)">Agregar</button>
-    </div>
-    <div class="producto">
-      <img src="https://cdn-icons-png.flaticon.com/512/2921/2921825.png" alt="Perfume C">
-      <h3>Perfume C</h3>
-      <p>$1800</p>
-      <button onclick="agregar(1800)">Agregar</button>
-    </div>
-  </div>
+  </section>
+
+  <section id="contacto" class="section">
+    <h2>Contacto</h2>
+    <p>Email: essence.lujo@gmail.com</p>
+    <p>Instagram: @essence.lujo</p>
+    <p>Facebook: /essence.lujo</p>
+  </section>
+
+  <footer>
+    &copy; 2025 ESSENCE - Todos los derechos reservados
+  </footer>
+
   <script>
     let total = 0;
     let cupon = 500;
     let cuponUsado = false;
+
     function agregar(precio) {
       total += precio;
       let descuento = (!cuponUsado && total >= cupon) ? cupon : 0;
       if (descuento > 0) cuponUsado = true;
       document.getElementById('total').textContent = total - descuento;
       document.getElementById('cup').textContent = `(Cupón aplicado: $${descuento})`;
+    }
+
+    function mostrar(seccion) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(seccion).classList.add('active');
     }
   </script>
 </body>
