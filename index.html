@@ -6,14 +6,19 @@
   <title>ESSENCE - Perfumes de Lujo</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      background: linear-gradient(-45deg, #0e0e0e, #1b1b2f, #2f2f46, #0e0e0e);
+      background-size: 400% 400%;
+      animation: fondoMovimiento 20s ease infinite;
       color: white;
+    }
+    @keyframes fondoMovimiento {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
     header {
       background-color: #000;
@@ -33,13 +38,60 @@
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #f1c40f;
+      transition: width 0.3s;
+    }
+    nav a:hover::after {
+      width: 100%;
     }
     .section {
       display: none;
       padding: 40px;
+      max-width: 1200px;
+      margin: auto;
     }
     .active {
       display: block;
+    }
+    .hero {
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      padding: 60px 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3em;
+      color: #f1c40f;
+    }
+    .hero p {
+      color: #ccc;
+      font-size: 1.2em;
+      max-width: 700px;
+      margin: 20px auto;
+    }
+    .hero a {
+      background: #f1c40f;
+      color: #111;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .hero a:hover {
+      background: #d4af37;
     }
     .productos {
       display: grid;
@@ -81,6 +133,28 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
+    .suscripcion {
+      margin-top: 40px;
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+    }
+    .suscripcion input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+    .suscripcion button {
+      background-color: #f1c40f;
+      color: #000;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
     footer {
       background-color: #111;
       text-align: center;
@@ -105,8 +179,17 @@
   </div>
 
   <section id="inicio" class="section active">
-    <h2>Bienvenido a ESSENCE</h2>
-    <p>Descubrí una colección exclusiva de perfumes de lujo diseñados para realzar tu esencia personal.</p>
+    <div class="hero">
+      <h2>ESSENCE</h2>
+      <p>Descubrí la esencia del lujo. Fragancias que despiertan emociones, inspiran elegancia y dejan huella.</p>
+      <a href="#" onclick="mostrar('catalogo')">Explorar catálogo</a>
+    </div>
+    <div class="suscripcion">
+      <h3>¡Suscribite y obtené $500 de descuento en tu primera compra!</h3>
+      <input type="email" placeholder="Tu correo electrónico" id="email">
+      <input type="password" placeholder="Contraseña" id="password">
+      <button onclick="suscribirse()">Quiero suscribirme</button>
+    </div>
   </section>
 
   <section id="catalogo" class="section">
@@ -148,10 +231,11 @@
     let total = 0;
     let cupon = 500;
     let cuponUsado = false;
+    let suscripto = false;
 
     function agregar(precio) {
       total += precio;
-      let descuento = (!cuponUsado && total >= cupon) ? cupon : 0;
+      let descuento = (!cuponUsado && suscripto && total >= cupon) ? cupon : 0;
       if (descuento > 0) cuponUsado = true;
       document.getElementById('total').textContent = total - descuento;
       document.getElementById('cup').textContent = `(Cupón aplicado: $${descuento})`;
@@ -160,6 +244,19 @@
     function mostrar(seccion) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(seccion).classList.add('active');
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function suscribirse() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Por favor completá todos los campos.');
+        return;
+      }
+      suscripto = true;
+      alert('¡Gracias por suscribirte! Ya podés usar tu cupón de $500.');
     }
   </script>
 </body>
